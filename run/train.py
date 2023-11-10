@@ -11,6 +11,7 @@ from pytorch_lightning.callbacks import (
     RichProgressBar,
 )
 from pytorch_lightning.loggers import WandbLogger
+import wandb
 
 from src.conf import TrainConfig
 from src.datamodule import SleepDataModule
@@ -25,6 +26,11 @@ LOGGER = logging.getLogger(Path(__file__).name)
 @hydra.main(config_path="conf", config_name="train", version_base="1.2")
 def main(cfg: TrainConfig):
     seed_everything(cfg.seed)
+    
+    wandb_api = cfg.wandb_key
+    if len(wandb_api) > 0:
+        LOGGER.info('Log in wandb using given key')
+        wandb.login(key=wandb_api)
 
     # init lightning model
     datamodule = SleepDataModule(cfg)

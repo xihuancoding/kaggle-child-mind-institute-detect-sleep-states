@@ -117,6 +117,7 @@ class TrainConfig:
     dataset: DatasetConfig
     aug: AugmentationConfig
     pp: PostProcessConfig
+    wandb_key: str
 
 
 @dataclass
